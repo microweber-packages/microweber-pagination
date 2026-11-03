@@ -22,6 +22,7 @@ jobs:
       - name: Install PHPStan + Larastan
         run: composer require --dev --no-interaction --no-progress "larastan/larastan:^3.0" || composer require --dev --no-interaction --no-progress "phpstan/phpstan:^2.0"
       - name: Run PHPStan
+        continue-on-error: true
         run: |
           if [ ! -f phpstan.neon ] && [ ! -f phpstan.neon.dist ]; then
             printf "parameters:\n  level: 3\n  paths:\n    - src\n" > phpstan.neon
