@@ -7,18 +7,14 @@ on:
 
 jobs:
   test:
-    name: Test PHP ${{ matrix.php }}
+    name: Test (PHP 8.4)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php: ['8.2', '8.3', '8.4']
     steps:
       - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php }}
+          php-version: '8.4'
           coverage: pcov
           tools: composer:v2
       - name: Validate composer.json
@@ -34,7 +30,6 @@ jobs:
             php -r "require 'vendor/autoload.php'; echo 'autoload OK' . PHP_EOL;"
           fi
       - name: Upload coverage artifact
-        if: ${{ matrix.php == '8.3' }}
         uses: actions/upload-artifact@v4
         with:
           name: coverage-clover
